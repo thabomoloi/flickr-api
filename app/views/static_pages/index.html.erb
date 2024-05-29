@@ -1,0 +1,22 @@
+<%= form_with url: root_path, method: :get do |form| %>
+    <%= form.label :flickr_id, "Enter Flickr ID:" %>
+    <%= form.text_field :flickr_id %>
+    <%= form.submit "Search", name: nil %>
+<% end %>
+
+<% if @error %>
+    <p style="color:red;"><%= @error %></p>
+<% end %>
+
+<% if @photos.present? %>
+  <h2>Photos</h2>
+  <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; padding: 0; margin: 0; list-style-type: none;">
+    <% @photos.each do |photo| %>
+      <li style="display: flex; justify-content: center; align-items: center; overflow: hidden;">
+        <%= image_tag Flickr.url_q(photo), alt: "Flickr photo", style: "max-width: 100%; height: auto; display: block;" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No photos found.</p>
+<% end %>
